@@ -4,7 +4,9 @@ from jose import jwt
 from passlib.context import CryptContext
 from app.core.config import settings
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+# bcrypt is limited to 72 bytes of password input. bcrypt_sha256 hashes the password
+# with SHA-256 first, allowing longer passwords and avoiding silent truncation.
+pwd_context = CryptContext(schemes=["bcrypt_sha256"], deprecated="auto")
 
 
 def hash_password(password: str) -> str:
