@@ -1,6 +1,6 @@
-from pydantic import BaseModel
-from datetime import datetime, date
-from typing import List
+from pydantic import BaseModel, ConfigDict
+from datetime import date
+from typing import Optional
 
 
 class DashboardStats(BaseModel):
@@ -15,12 +15,16 @@ class DashboardStats(BaseModel):
     completion_rate_this_week: float
     completion_rate_this_month: float
 
+    model_config = ConfigDict(from_attributes=True)
+
 
 class WeekdayStats(BaseModel):
     weekday: str
     avg_completion: float
     total_days: int
     active_days: int
+
+    model_config = ConfigDict(from_attributes=True)
 
 
 class WeeklyReport(BaseModel):
@@ -32,6 +36,8 @@ class WeeklyReport(BaseModel):
     best_day: Optional[date]
     xp_earned: int
     active_days: int
+
+    model_config = ConfigDict(from_attributes=True)
 
 
 class MonthlyReport(BaseModel):
@@ -45,9 +51,17 @@ class MonthlyReport(BaseModel):
     active_days: int
     total_days: int
 
+    model_config = ConfigDict(from_attributes=True)
+
 
 class CategoryStats(BaseModel):
     category: Optional[str]
     tasks_total: int
     tasks_completed: int
     completion_rate: float
+
+    model_config = ConfigDict(from_attributes=True)
+
+
+WeeklyReport.model_rebuild()
+MonthlyReport.model_rebuild()
